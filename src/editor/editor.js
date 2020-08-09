@@ -10,7 +10,7 @@ class EditorComponent extends React.Component {
         super();
     }
     render() {
-        return (<div>Hellow from editor</div>)
+        return (<div>Hellow from editor</div>);
     }
 }
 export default withStyles(styles)(EditorComponent);
