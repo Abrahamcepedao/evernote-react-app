@@ -88,13 +88,16 @@ class App extends React.Component {
   deleteNote = async(note) => {
     const noteIndex = this.state.notes.indexOf(note);
     await this.setState({ notes: this.state.notes.filter(_note => _note !== note)});
-    if(this.state.selectedNoteIndex === noteIndex){
-      this.setState({ selectedNoteIndex: null, selectedNote: null });
-    } else{
-      this.state.notes.length > 1 ?
-        this.selectNote(this.state.notes[this.state.selectedNoteIndex-1], this.state.selectedNoteIndex - 1) :
+    if(this.state.selectedNoteIndex){
+      if (this.state.notes.length > 1) {
+        noteIndex > this.state.selectedNoteIndex ?
+          this.selectNote(this.state.notes[this.state.selectedNoteIndex - 1], this.state.selectedNoteIndex - 1) :
+          this.setState({ selectedNoteIndex: this.state.selectedNoteIndex, selectedNote: this.state.selectedNote });
+      } else {
         this.setState({ selectedNoteIndex: null, selectedNote: null });
+      }
     }
+    
     firebase
       .firestore()
       .collection('notes')
